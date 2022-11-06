@@ -21,6 +21,7 @@ import net.runelite.client.ui.overlay.infobox.*;
 import net.runelite.client.util.Text;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import net.runelite.client.Notifier;
+
 @Slf4j
 @PluginDescriptor(
 	name = "Memoir Charges"
@@ -28,10 +29,10 @@ import net.runelite.client.Notifier;
 public class MemoirChargesPlugin extends Plugin
 {
 	private static final Pattern BOOK_OF_THE_DEAD_USE_PATTERN = Pattern.compile(
-			"The Book of the Dead now has (\\d+) memories remaining\\."
+		"The Book of the Dead now has (\\d+) memories remaining\\."
 	);
 	private static final Pattern MEMOIRS_USE_PATTERN = Pattern.compile(
-			"Kharedst's Memoirs now has (\\d+) memories remaining\\."
+		"Kharedst\'s Memoirs now has (\\d+) memories remaining\\."
 	);
 	private Counter botdInfobox;
 	private Counter memoirsInfobox;
@@ -50,6 +51,7 @@ public class MemoirChargesPlugin extends Plugin
 	private InfoBoxManager infoBoxManager;
 	@Inject
 	private Notifier notifier;
+
 	@Override
 	protected void startUp() throws Exception
 	{
@@ -72,7 +74,7 @@ public class MemoirChargesPlugin extends Plugin
 			Matcher memoirsMatcher = MEMOIRS_USE_PATTERN.matcher(message);
 			if (bookOfTheDeadMatcher.find())
 			{
-				if(botdInfobox != null)
+				if (botdInfobox != null)
 				{
 					botdInfobox.setCount(Integer.parseInt(bookOfTheDeadMatcher.group(1)));
 				}
@@ -82,13 +84,15 @@ public class MemoirChargesPlugin extends Plugin
 					botdInfobox = new Counter(image, this, Integer.parseInt(bookOfTheDeadMatcher.group(1)));
 					infoBoxManager.addInfoBox(botdInfobox);
 				}
-				if(Integer.parseInt(bookOfTheDeadMatcher.group(1)) < 1){
+				if (Integer.parseInt(bookOfTheDeadMatcher.group(1)) < 1)
+				{
 					notifier.notify("Your Book of the Dead has run out of charges");
 				}
-			} else if (memoirsMatcher.find())
+			}
+			else if (memoirsMatcher.find())
 			{
 
-				if(memoirsInfobox != null)
+				if (memoirsInfobox != null)
 				{
 					memoirsInfobox.setCount(Integer.parseInt(memoirsMatcher.group(1)));
 				}
@@ -99,7 +103,8 @@ public class MemoirChargesPlugin extends Plugin
 					infoBoxManager.addInfoBox(memoirsInfobox);
 				}
 
-				if(Integer.parseInt(memoirsMatcher.group(1)) < 1){
+				if (Integer.parseInt(memoirsMatcher.group(1)) < 1)
+				{
 					notifier.notify("Your Kharedst's memoirs has run out of charges");
 				}
 			}
